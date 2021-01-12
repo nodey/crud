@@ -19,7 +19,7 @@ CREATE TABLE employees(
                               REFERENCES departments (department_id)
 );
 
-create sequence SEQ_USER
+create sequence SEQ_DEPARTMENT
     minvalue 1
     start with 10
     increment by 1
