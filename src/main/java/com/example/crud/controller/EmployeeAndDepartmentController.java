@@ -2,63 +2,95 @@ package com.example.crud.controller;
 
 import com.example.crud.entity.Department;
 import com.example.crud.entity.Employee;
+import com.example.crud.repository.EmployeeRepository;
 import com.example.crud.service.DepartmentAndEmployeeService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@Api(value = "Employee And Department controller", description = "Basic operation with data from db")
 public class EmployeeAndDepartmentController {
 
-    final
+    @Autowired
+    EmployeeRepository employeeRepository;
+
+    @Autowired
     DepartmentAndEmployeeService service;
 
-    public EmployeeAndDepartmentController(DepartmentAndEmployeeService service) {
-        this.service = service;
-    }
-
     //Get all departments with their users
-    @GetMapping("/getAllDep")
-    public ResponseEntity<List<Department>> getAllDepAndEmp(){
-        List<Department> departments = service.getAllDepAndEmp();
-        return new ResponseEntity<>(departments, HttpStatus.OK);
+    @GetMapping("/get/all/departments")
+    @ApiOperation(value = "Return list of departments from database")
+    public List<Department> getAllDepartmentsWithEmployee(){
+        return service.getAllDepartmentsWithEmployees();
     }
 
     //Get one department
-    @GetMapping("/getOneDep/{id}")
-    public ResponseEntity<Department> getOneDep(@PathVariable("id") Long id){
-        Department department = service.getOneDep(id);
-        return new ResponseEntity<>(department, HttpStatus.OK);
+    @GetMapping("/get/one/department/{id}")
+    @ApiOperation(value = "Return one departments from database by ID")
+    public Department getOneDepartment(@PathVariable("id") int id){
+        return service.getOneDepartment(id);
     }
 
     //Create department
-    @PostMapping("/addOneDep")
-    public ResponseEntity<Object> createOneDep(@RequestBody Department department){
-        Department createDep = service.create(department);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createDep.getId()).toUri();
-        return ResponseEntity.created(location).build();
+    @PostMapping("/create/one/department")
+    @ApiOperation(value = "Add one department to database")
+    public Department createOneDepartment(@RequestBody Department department){
+        return service.createOneDepartment(department);
     }
 
     //Delete department
-    @DeleteMapping("/delOneDep/{id}")
-    public void deleteOneDep(@PathVariable("id") Long id){
-        service.delete(id);
+    @DeleteMapping("/delete/one/department/{id}")
+    @ApiOperation(value = "Delete one department from database by ID")
+    public void deleteDepartment(@PathVariable("id") int id){
+        service.deleteDepartment(id);
     }
 
     //Get one employee
-    @GetMapping("/getOneEmp/{id}")
-    public ResponseEntity<Employee> getOneEmp(@PathVariable("id") Long id){
-        Employee employee = service.getOneEmp(id);
-        return new ResponseEntity<>(employee, HttpStatus.OK);
+    @GetMapping("/get/one/employee/{id}")
+    @ApiOperation(value = "Return one employee from database by ID")
+    public Employee getOneEmployee(@PathVariable("id") int id){
+       return service.getOneEmployee(id);
     }
+
     //Create employee
+    @PostMapping("/create/one/employee")
+    @ApiOperation(value = "Add one employee to database")
+    public Employee createOneEmployee(@RequestBody Employee employee){
+        return service.createOneEmployee(employee);
+    }
+
     //Delete employee
+    @DeleteMapping("/delete/one/employee/{id}")
+    @ApiOperation(value = "Delete one employee from database by ID")
+    public void deleteOneEmployee(@PathVariable("id") int id){
+        service.deleteEmployee(id);
+    }
+
     //Add employee to department
+    @PutMapping("/add/employee/to/department/{id}")
+    @ApiOperation(value = "Add one employee to department by change ID")
+    public Department addEmployeeToDepartment(@PathVariable("id") int id,
+                                       @RequestBody int departmentId){
+        service.addEmployeeToDepartment(id, departmentId);
+        return service.getOneDepartment(departmentId);
+    }
+
     //Remove employee from department
+    @ApiOperation(value = "Delete one employee from department by ID")
+    @PutMapping("/delete/employee/from/department/{id}")
+    public Employee deleteEmployee(@PathVariable("id") int id){
+        return service.deleteEmployeeFromDepartment(id);
+    }
+
     //Get all employees which do not belong to any department
+    @GetMapping("/get/all/employee/without/department")
+    @ApiOperation(value = "Return list of employees who have department ID null")
+    public List<Employee> getAllEmployeeWithoutDepartment(){
+        return service.getAllEmployeeWithoutDepartment();
+    }
 }

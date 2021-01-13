@@ -1,0 +1,256 @@
+{
+	"info": {
+		"_postman_id": "d871c4f7-d909-440b-9019-271c841198a4",
+		"name": "JuniorBackendTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Добавление департамента",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"IT Company\",\n    \"description\": \"Some text about company number\",\n    \"phoneNumber\": \"+375000000001\",\n    \"dateOfFormation\": \"21.01.2021\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/create/one/department",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"create",
+						"one",
+						"department"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Вывод всех департаментов",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/get/all/departments",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"get",
+						"all",
+						"departments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Вывод одного департамента по ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/get/one/department/16",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"get",
+						"one",
+						"department",
+						"16"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление одного департамента по ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/delete/one/department/17",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"delete",
+						"one",
+						"department",
+						"17"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создание одного работника",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fullName\": \"Hrytsuk Viktor\",\n    \"dateOfBirth\": \"16.04.1998\",\n    \"phoneNumber\": \"+375298242038\",\n    \"email\": \"someEmail@some.com\",\n    \"position\": \"Looking for Junior Software\",\n    \"dateOfEmployment\": \"21.01.2021\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/create/one/employee",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"create",
+						"one",
+						"employee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Поиск одного работника по ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/get/one/employee/18",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"get",
+						"one",
+						"employee",
+						"18"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление одного работника по ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/delete/one/employee/18",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"delete",
+						"one",
+						"employee",
+						"18"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление работника к определенному департаменту по ID",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "16",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/add/employee/to/department/0",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"add",
+						"employee",
+						"to",
+						"department",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление сотрудника из департамента по ID",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/delete/employee/from/department/0",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"delete",
+						"employee",
+						"from",
+						"department",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Вывод всех работников у которых нет департамента",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/get/all/employee/without/department",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"get",
+						"all",
+						"employee",
+						"without",
+						"department"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

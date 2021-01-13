@@ -1,53 +1,67 @@
 package com.example.crud.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
-import java.util.Date;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "employees")
-public class Employee{
+public class Employee implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-    generator = "departments_seq")
-    @SequenceGenerator(name = "departments_seq",
-                        sequenceName = "SEQ_DEPARTMENT",
-                        allocationSize = 1)
-    private Long employeeId;
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "employee_id")
+    @ApiModelProperty(notes = "Employee ID")
+    private int id;
+
+    @Column(name = "department_id")
+    @JsonProperty("departmentId")
+    @ApiModelProperty(notes = "ID of the department where the employee works")
+    private int departmentId;
 
     @Column(name = "employee_name")
+    @ApiModelProperty(notes = "Full name of employee")
     private String fullName;
 
-    @Column(name = "employee_dateofbirth")
+    @Column(name = "employee_date_of_birth")
+    @Size(min = 10)
+    @Size(max = 10)
+    @ApiModelProperty(notes = "Employee's birthday")
     private String dateOfBirth;
 
     @Column(name = "employee_phone")
+    @Size(min = 13)
+    @Size(max = 13)
+    @ApiModelProperty(notes = "Employee's mobile phone")
     private String phoneNumber;
 
     @Column(name = "employee_email")
+    @Email
+    @ApiModelProperty(notes = "Employee email")
     private String email;
 
     @Column(name = "employee_position")
+    @ApiModelProperty(notes = "Employee's position")
     private String position;
 
     @Column(name = "employee_date_of_employment")
-    private Date dateOfEmployment;
-
-    @ManyToOne (fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL)
-    @JoinColumn (name = "department_id")
-    private Department department;
+    @Size(min = 10)
+    @Size(max = 10)
+    @ApiModelProperty(notes = "Employee date of employment")
+    private String dateOfEmployment;
 
     public Employee() {
     }
 
-    public Employee(Long employeeId, Department department,
-                    String fullName, String dateOfBirth,
-                    String phoneNumber, String email,
-                    String position, Date dateOfEmployment) {
-        super();
-        this.employeeId = employeeId;
-        this.department = department;
+    public Employee(int id, int departmentId, String fullName,
+                    String dateOfBirth, String phoneNumber, String email,
+                    String position, String dateOfEmployment) {
+        this.id = id;
+        this.departmentId = departmentId;
         this.fullName = fullName;
         this.dateOfBirth = dateOfBirth;
         this.phoneNumber = phoneNumber;
@@ -56,20 +70,20 @@ public class Employee{
         this.dateOfEmployment = dateOfEmployment;
     }
 
-    public Long getEmployeeId() {
-        return employeeId;
+    public int getId() {
+        return id;
     }
 
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public Department getDepartment() {
-        return department;
+    public int getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
     }
 
     public String getFullName() {
@@ -112,19 +126,19 @@ public class Employee{
         this.position = position;
     }
 
-    public Date getDateOfEmployment() {
+    public String getDateOfEmployment() {
         return dateOfEmployment;
     }
 
-    public void setDateOfEmployment(Date dateOfEmployment) {
+    public void setDateOfEmployment(String dateOfEmployment) {
         this.dateOfEmployment = dateOfEmployment;
     }
 
     @Override
     public String toString() {
         return "Employee{" +
-                "employeeId=" + employeeId +
-                ", department=" + department +
+                "id=" + id +
+                ", departmentId=" + departmentId +
                 ", fullName='" + fullName + '\'' +
                 ", dateOfBirth='" + dateOfBirth + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +

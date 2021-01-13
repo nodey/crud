@@ -7,6 +7,7 @@ import com.example.crud.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,32 +17,67 @@ public class DepartmentAndEmployeeService {
     EmployeeRepository employeeRepository;
 
     @Autowired
-    DepartmentRepository DepartmentRepository;
+    DepartmentRepository departmentRepository;
 
-    public List<Department> getAllDepAndEmp(){
-        if(DepartmentRepository != null )
-            return DepartmentRepository.findAll();
+    public List<Department> getAllDepartmentsWithEmployees(){
+        if(departmentRepository != null )
+            return departmentRepository.findAll();
         return null;
     }
 
-    public Department getOneDep(Long id){
-        if(DepartmentRepository != null)
-            return DepartmentRepository.findById(id).get();
+    public Department getOneDepartment(int id){
+        if(departmentRepository != null)
+            return departmentRepository.findById(id).get();
         return null;
     }
 
-    public Department create(Department department){
-        if (DepartmentRepository != null)
-            return DepartmentRepository.save(department);
+    public Department createOneDepartment(Department department){
+        if (departmentRepository != null)
+            return departmentRepository.save(department);
         return null;
     }
 
-    public void delete(Long id){
-        DepartmentRepository.deleteById(id);
+    public void deleteDepartment(int id){
+        departmentRepository.deleteById(id);
     }
-    public Employee getOneEmp(Long id){
+
+    public Employee getOneEmployee(int id){
         if(employeeRepository != null)
             return employeeRepository.findById(id).get();
         return null;
+    }
+
+    public void deleteEmployee(int id){
+        employeeRepository.deleteById(id);
+    }
+
+    public Employee createOneEmployee(Employee employee){
+        if (employeeRepository != null)
+            return employeeRepository.save(employee);
+        return null;
+    }
+
+    public Employee deleteEmployeeFromDepartment(int id){
+        Employee employee = getOneEmployee(id);
+        employee.setDepartmentId(0);
+        return employeeRepository.save(employee);
+    }
+
+
+    public Employee addEmployeeToDepartment(int id, int departmentId){
+        Employee employee = getOneEmployee(id);
+        employee.setDepartmentId(departmentId);
+        return employeeRepository.save(employee);
+    }
+
+    public List<Employee> getAllEmployeeWithoutDepartment(){
+        List<Employee> employees = employeeRepository.findAll();
+        List<Employee> finalList = new ArrayList<>();
+        for(int i = 0; i < employees.size(); i++){
+            Employee employeeDepartmentId = employees.get(i);
+            if(employeeDepartmentId.getDepartmentId() == 0){
+                finalList.add(employeeDepartmentId);
+            }
+        }return finalList;
     }
 }
