@@ -19,7 +19,6 @@ public class Employee implements Serializable {
     private int id;
 
     @Column(name = "department_id")
-    @JsonProperty("departmentId")
     @ApiModelProperty(notes = "ID of the department where the employee works")
     private int departmentId;
 

@@ -11,7 +11,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "departments")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Department implements Serializable {
 
     @Id
@@ -44,7 +43,6 @@ public class Department implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "department_id")
-    @JsonProperty("employees")
     @ApiModelProperty(notes = "All employees of the department")
     private List<Employee> employees;
 
